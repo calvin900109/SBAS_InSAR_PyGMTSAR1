@@ -1,0 +1,147 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>InSAR Velocity Map with Azure Maps</title>
+        <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+        <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css">
+        <style>
+            body { margin: 0; padding: 0; }
+            #map { width: 100%; height: 100vh; }
+            #popup { background-color: white; border: 1px solid black; padding: 5px; position: absolute; display: none; }
+            #colorbar {
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                width: 300px;  /* Adjust width for a wider colorbar */
+                height: 20px;
+                display: flex;
+            }
+            #colorbar-labels {
+                position: absolute;
+                bottom: 0;
+                left: 20px;
+                display: flex;
+                justify-content: space-between;
+                width: 300px;
+                font-size: 12px;
+                color: black;
+            }
+            #layerToggle {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background-color: white;
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div id="map"></div>
+    <div id="popup"></div>
+    <div id="colorbar">
+        <div style="flex: 1; background-color: #30123b;"></div><div style="flex: 1; background-color: #321543;"></div><div style="flex: 1; background-color: #33184a;"></div><div style="flex: 1; background-color: #341b51;"></div><div style="flex: 1; background-color: #351e58;"></div><div style="flex: 1; background-color: #36215f;"></div><div style="flex: 1; background-color: #372466;"></div><div style="flex: 1; background-color: #38276d;"></div><div style="flex: 1; background-color: #392a73;"></div><div style="flex: 1; background-color: #3a2d79;"></div><div style="flex: 1; background-color: #3b2f80;"></div><div style="flex: 1; background-color: #3c3286;"></div><div style="flex: 1; background-color: #3d358b;"></div><div style="flex: 1; background-color: #3e3891;"></div><div style="flex: 1; background-color: #3f3b97;"></div><div style="flex: 1; background-color: #3f3e9c;"></div><div style="flex: 1; background-color: #4040a2;"></div><div style="flex: 1; background-color: #4143a7;"></div><div style="flex: 1; background-color: #4146ac;"></div><div style="flex: 1; background-color: #4249b1;"></div><div style="flex: 1; background-color: #424bb5;"></div><div style="flex: 1; background-color: #434eba;"></div><div style="flex: 1; background-color: #4451bf;"></div><div style="flex: 1; background-color: #4454c3;"></div><div style="flex: 1; background-color: #4456c7;"></div><div style="flex: 1; background-color: #4559cb;"></div><div style="flex: 1; background-color: #455ccf;"></div><div style="flex: 1; background-color: #455ed3;"></div><div style="flex: 1; background-color: #4661d6;"></div><div style="flex: 1; background-color: #4664da;"></div><div style="flex: 1; background-color: #4666dd;"></div><div style="flex: 1; background-color: #4669e0;"></div><div style="flex: 1; background-color: #466be3;"></div><div style="flex: 1; background-color: #476ee6;"></div><div style="flex: 1; background-color: #4771e9;"></div><div style="flex: 1; background-color: #4773eb;"></div><div style="flex: 1; background-color: #4776ee;"></div><div style="flex: 1; background-color: #4778f0;"></div><div style="flex: 1; background-color: #477bf2;"></div><div style="flex: 1; background-color: #467df4;"></div><div style="flex: 1; background-color: #4680f6;"></div><div style="flex: 1; background-color: #4682f8;"></div><div style="flex: 1; background-color: #4685fa;"></div><div style="flex: 1; background-color: #4687fb;"></div><div style="flex: 1; background-color: #458afc;"></div><div style="flex: 1; background-color: #458cfd;"></div><div style="flex: 1; background-color: #448ffe;"></div><div style="flex: 1; background-color: #4391fe;"></div><div style="flex: 1; background-color: #4294ff;"></div><div style="flex: 1; background-color: #4196ff;"></div><div style="flex: 1; background-color: #4099ff;"></div><div style="flex: 1; background-color: #3e9bfe;"></div><div style="flex: 1; background-color: #3d9efe;"></div><div style="flex: 1; background-color: #3ba0fd;"></div><div style="flex: 1; background-color: #3aa3fc;"></div><div style="flex: 1; background-color: #38a5fb;"></div><div style="flex: 1; background-color: #37a8fa;"></div><div style="flex: 1; background-color: #35abf8;"></div><div style="flex: 1; background-color: #33adf7;"></div><div style="flex: 1; background-color: #31aff5;"></div><div style="flex: 1; background-color: #2fb2f4;"></div><div style="flex: 1; background-color: #2eb4f2;"></div><div style="flex: 1; background-color: #2cb7f0;"></div><div style="flex: 1; background-color: #2ab9ee;"></div><div style="flex: 1; background-color: #28bceb;"></div><div style="flex: 1; background-color: #27bee9;"></div><div style="flex: 1; background-color: #25c0e7;"></div><div style="flex: 1; background-color: #23c3e4;"></div><div style="flex: 1; background-color: #22c5e2;"></div><div style="flex: 1; background-color: #20c7df;"></div><div style="flex: 1; background-color: #1fc9dd;"></div><div style="flex: 1; background-color: #1ecbda;"></div><div style="flex: 1; background-color: #1ccdd8;"></div><div style="flex: 1; background-color: #1bd0d5;"></div><div style="flex: 1; background-color: #1ad2d2;"></div><div style="flex: 1; background-color: #1ad4d0;"></div><div style="flex: 1; background-color: #19d5cd;"></div><div style="flex: 1; background-color: #18d7ca;"></div><div style="flex: 1; background-color: #18d9c8;"></div><div style="flex: 1; background-color: #18dbc5;"></div><div style="flex: 1; background-color: #18ddc2;"></div><div style="flex: 1; background-color: #18dec0;"></div><div style="flex: 1; background-color: #18e0bd;"></div><div style="flex: 1; background-color: #19e2bb;"></div><div style="flex: 1; background-color: #19e3b9;"></div><div style="flex: 1; background-color: #1ae4b6;"></div><div style="flex: 1; background-color: #1ce6b4;"></div><div style="flex: 1; background-color: #1de7b2;"></div><div style="flex: 1; background-color: #1fe9af;"></div><div style="flex: 1; background-color: #20eaac;"></div><div style="flex: 1; background-color: #22ebaa;"></div><div style="flex: 1; background-color: #25eca7;"></div><div style="flex: 1; background-color: #27eea4;"></div><div style="flex: 1; background-color: #2aefa1;"></div><div style="flex: 1; background-color: #2cf09e;"></div><div style="flex: 1; background-color: #2ff19b;"></div><div style="flex: 1; background-color: #32f298;"></div><div style="flex: 1; background-color: #35f394;"></div><div style="flex: 1; background-color: #38f491;"></div><div style="flex: 1; background-color: #3cf58e;"></div><div style="flex: 1; background-color: #3ff68a;"></div><div style="flex: 1; background-color: #43f787;"></div><div style="flex: 1; background-color: #46f884;"></div><div style="flex: 1; background-color: #4af880;"></div><div style="flex: 1; background-color: #4ef97d;"></div><div style="flex: 1; background-color: #52fa7a;"></div><div style="flex: 1; background-color: #55fa76;"></div><div style="flex: 1; background-color: #59fb73;"></div><div style="flex: 1; background-color: #5dfc6f;"></div><div style="flex: 1; background-color: #61fc6c;"></div><div style="flex: 1; background-color: #65fd69;"></div><div style="flex: 1; background-color: #69fd66;"></div><div style="flex: 1; background-color: #6dfe62;"></div><div style="flex: 1; background-color: #71fe5f;"></div><div style="flex: 1; background-color: #75fe5c;"></div><div style="flex: 1; background-color: #79fe59;"></div><div style="flex: 1; background-color: #7dff56;"></div><div style="flex: 1; background-color: #80ff53;"></div><div style="flex: 1; background-color: #84ff51;"></div><div style="flex: 1; background-color: #88ff4e;"></div><div style="flex: 1; background-color: #8bff4b;"></div><div style="flex: 1; background-color: #8fff49;"></div><div style="flex: 1; background-color: #92ff47;"></div><div style="flex: 1; background-color: #96fe44;"></div><div style="flex: 1; background-color: #99fe42;"></div><div style="flex: 1; background-color: #9cfe40;"></div><div style="flex: 1; background-color: #9ffd3f;"></div><div style="flex: 1; background-color: #a1fd3d;"></div><div style="flex: 1; background-color: #a4fc3c;"></div><div style="flex: 1; background-color: #a7fc3a;"></div><div style="flex: 1; background-color: #a9fb39;"></div><div style="flex: 1; background-color: #acfb38;"></div><div style="flex: 1; background-color: #affa37;"></div><div style="flex: 1; background-color: #b1f936;"></div><div style="flex: 1; background-color: #b4f836;"></div><div style="flex: 1; background-color: #b7f735;"></div><div style="flex: 1; background-color: #b9f635;"></div><div style="flex: 1; background-color: #bcf534;"></div><div style="flex: 1; background-color: #bef434;"></div><div style="flex: 1; background-color: #c1f334;"></div><div style="flex: 1; background-color: #c3f134;"></div><div style="flex: 1; background-color: #c6f034;"></div><div style="flex: 1; background-color: #c8ef34;"></div><div style="flex: 1; background-color: #cbed34;"></div><div style="flex: 1; background-color: #cdec34;"></div><div style="flex: 1; background-color: #d0ea34;"></div><div style="flex: 1; background-color: #d2e935;"></div><div style="flex: 1; background-color: #d4e735;"></div><div style="flex: 1; background-color: #d7e535;"></div><div style="flex: 1; background-color: #d9e436;"></div><div style="flex: 1; background-color: #dbe236;"></div><div style="flex: 1; background-color: #dde037;"></div><div style="flex: 1; background-color: #dfdf37;"></div><div style="flex: 1; background-color: #e1dd37;"></div><div style="flex: 1; background-color: #e3db38;"></div><div style="flex: 1; background-color: #e5d938;"></div><div style="flex: 1; background-color: #e7d739;"></div><div style="flex: 1; background-color: #e9d539;"></div><div style="flex: 1; background-color: #ebd339;"></div><div style="flex: 1; background-color: #ecd13a;"></div><div style="flex: 1; background-color: #eecf3a;"></div><div style="flex: 1; background-color: #efcd3a;"></div><div style="flex: 1; background-color: #f1cb3a;"></div><div style="flex: 1; background-color: #f2c93a;"></div><div style="flex: 1; background-color: #f4c73a;"></div><div style="flex: 1; background-color: #f5c53a;"></div><div style="flex: 1; background-color: #f6c33a;"></div><div style="flex: 1; background-color: #f7c13a;"></div><div style="flex: 1; background-color: #f8be39;"></div><div style="flex: 1; background-color: #f9bc39;"></div><div style="flex: 1; background-color: #faba39;"></div><div style="flex: 1; background-color: #fbb838;"></div><div style="flex: 1; background-color: #fbb637;"></div><div style="flex: 1; background-color: #fcb336;"></div><div style="flex: 1; background-color: #fcb136;"></div><div style="flex: 1; background-color: #fdae35;"></div><div style="flex: 1; background-color: #fdac34;"></div><div style="flex: 1; background-color: #fea933;"></div><div style="flex: 1; background-color: #fea732;"></div><div style="flex: 1; background-color: #fea431;"></div><div style="flex: 1; background-color: #fea130;"></div><div style="flex: 1; background-color: #fe9e2f;"></div><div style="flex: 1; background-color: #fe9b2d;"></div><div style="flex: 1; background-color: #fe992c;"></div><div style="flex: 1; background-color: #fe962b;"></div><div style="flex: 1; background-color: #fe932a;"></div><div style="flex: 1; background-color: #fe9029;"></div><div style="flex: 1; background-color: #fd8d27;"></div><div style="flex: 1; background-color: #fd8a26;"></div><div style="flex: 1; background-color: #fc8725;"></div><div style="flex: 1; background-color: #fc8423;"></div><div style="flex: 1; background-color: #fb8122;"></div><div style="flex: 1; background-color: #fb7e21;"></div><div style="flex: 1; background-color: #fa7b1f;"></div><div style="flex: 1; background-color: #f9781e;"></div><div style="flex: 1; background-color: #f9751d;"></div><div style="flex: 1; background-color: #f8721c;"></div><div style="flex: 1; background-color: #f76f1a;"></div><div style="flex: 1; background-color: #f66c19;"></div><div style="flex: 1; background-color: #f56918;"></div><div style="flex: 1; background-color: #f46617;"></div><div style="flex: 1; background-color: #f36315;"></div><div style="flex: 1; background-color: #f26014;"></div><div style="flex: 1; background-color: #f15d13;"></div><div style="flex: 1; background-color: #f05b12;"></div><div style="flex: 1; background-color: #ef5811;"></div><div style="flex: 1; background-color: #ed5510;"></div><div style="flex: 1; background-color: #ec530f;"></div><div style="flex: 1; background-color: #eb500e;"></div><div style="flex: 1; background-color: #ea4e0d;"></div><div style="flex: 1; background-color: #e84b0c;"></div><div style="flex: 1; background-color: #e7490c;"></div><div style="flex: 1; background-color: #e5470b;"></div><div style="flex: 1; background-color: #e4450a;"></div><div style="flex: 1; background-color: #e2430a;"></div><div style="flex: 1; background-color: #e14109;"></div><div style="flex: 1; background-color: #df3f08;"></div><div style="flex: 1; background-color: #dd3d08;"></div><div style="flex: 1; background-color: #dc3b07;"></div><div style="flex: 1; background-color: #da3907;"></div><div style="flex: 1; background-color: #d83706;"></div><div style="flex: 1; background-color: #d63506;"></div><div style="flex: 1; background-color: #d43305;"></div><div style="flex: 1; background-color: #d23105;"></div><div style="flex: 1; background-color: #d02f05;"></div><div style="flex: 1; background-color: #ce2d04;"></div><div style="flex: 1; background-color: #cc2b04;"></div><div style="flex: 1; background-color: #ca2a04;"></div><div style="flex: 1; background-color: #c82803;"></div><div style="flex: 1; background-color: #c52603;"></div><div style="flex: 1; background-color: #c32503;"></div><div style="flex: 1; background-color: #c12302;"></div><div style="flex: 1; background-color: #be2102;"></div><div style="flex: 1; background-color: #bc2002;"></div><div style="flex: 1; background-color: #b91e02;"></div><div style="flex: 1; background-color: #b71d02;"></div><div style="flex: 1; background-color: #b41b01;"></div><div style="flex: 1; background-color: #b21a01;"></div><div style="flex: 1; background-color: #af1801;"></div><div style="flex: 1; background-color: #ac1701;"></div><div style="flex: 1; background-color: #a91601;"></div><div style="flex: 1; background-color: #a71401;"></div><div style="flex: 1; background-color: #a41301;"></div><div style="flex: 1; background-color: #a11201;"></div><div style="flex: 1; background-color: #9e1001;"></div><div style="flex: 1; background-color: #9b0f01;"></div><div style="flex: 1; background-color: #980e01;"></div><div style="flex: 1; background-color: #950d01;"></div><div style="flex: 1; background-color: #920b01;"></div><div style="flex: 1; background-color: #8e0a01;"></div><div style="flex: 1; background-color: #8b0902;"></div><div style="flex: 1; background-color: #880802;"></div><div style="flex: 1; background-color: #850702;"></div><div style="flex: 1; background-color: #810602;"></div><div style="flex: 1; background-color: #7e0502;"></div><div style="flex: 1; background-color: #7a0403;"></div>
+    </div>
+    <div id="colorbar-labels">
+        <span>-60 mm/年</span>
+        <span>0 mm/年</span>
+        <span>60 mm/年</span>
+    </div>
+    <div id="layerToggle">
+        <label><input type="checkbox" id="insarLayerCheckbox" checked> 顯示 InSAR 圖層</label>
+    </div>
+
+    <script>
+        const subscriptionKey = '3IH2ktGvtdzmhTFRQCVsOu7RsRZy1mspoK8XRWRItXLhgUNXeNfhJQQJ99AHACYeBjFAEl8IAAAgAZMPnwPm';  // Replace with your actual Azure Maps API key
+
+        const map = new atlas.Map('map', {
+            center: [120.416389, 23.736389],
+            zoom: 8,
+            language: 'zh-Hant',  // Set map language to Traditional Chinese
+            authOptions: {
+                authType: 'subscriptionKey',
+                subscriptionKey: subscriptionKey
+            },
+            style: 'road'  // Using default road style
+        });
+
+        let insarLayer; // Define a variable to hold the InSAR layer
+
+        map.events.add('ready', function() {
+            fetch('GeoJSON_file_simplified.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    const dataSource = new atlas.source.DataSource();
+                    map.sources.add(dataSource);
+                    dataSource.add(data);
+
+                    insarLayer = new atlas.layer.PolygonLayer(dataSource, 'insar-velocity-layer', {
+                        fillColor: ['get', 'color'],
+                        fillOpacity: 0.5,
+                        strokeColor: 'black',
+                        strokeWidth: 1
+                    });
+
+                    map.layers.add(insarLayer);
+
+                    map.events.add('mousemove', function(e) {
+                        const shapes = map.layers.getRenderedShapes(e.position, 'insar-velocity-layer');
+                        if (shapes.length > 0) {
+                            const properties = shapes[0].getProperties();
+                            const popup = document.getElementById('popup');
+                            popup.style.display = 'block';
+                            popup.style.left = e.position[0] + 'px';
+                            popup.style.top = e.position[1] + 'px';
+                            popup.innerHTML = `速度 (mm/年): ${properties.velocity}`;
+                        } else {
+                            document.getElementById('popup').style.display = 'none';
+                        }
+                    });
+
+                    
+                    const marker1 = new atlas.HtmlMarker({
+                        position: [120.416389, 23.736389],  // Coordinates for Yunlin High-Speed Rail Station
+                        popup: new atlas.Popup({
+                            content: '<div style="padding:5px;">虎尾鎮</div>'
+                        }),
+                        icon: 'pin-round-blue'  // Use a supported icon type (e.g., 'pin-round-blue')
+                    });
+
+                    
+                    const marker2 = new atlas.HtmlMarker({
+                        position: [120.323124, 23.459585],  // Coordinates for Chiayi High-Speed Rail Station
+                        popup: new atlas.Popup({
+                            content: '<div style="padding:5px;">太保市</div>'
+                        }),
+                        icon: 'pin-round-blue'  // Use a supported icon type (e.g., 'pin-round-blue')
+                    });
+
+                    map.markers.add(marker1);
+                    map.markers.add(marker2);
+
+                    // Automatically open the marker popups
+                    marker1.togglePopup();
+                    marker2.togglePopup();
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        });
+
+        // Toggle the InSAR layer visibility
+        document.getElementById('insarLayerCheckbox').addEventListener('change', function(e) {
+            if (e.target.checked) {
+                map.layers.add(insarLayer);
+            } else {
+                map.layers.remove(insarLayer);
+            }
+        });
+    </script>
+
+    </body>
+    </html>
+    

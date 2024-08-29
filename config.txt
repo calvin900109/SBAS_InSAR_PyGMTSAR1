@@ -1,0 +1,36 @@
+# 配置參數，用於設定 InSAR 處理過程中的參數
+
+# 設置極化模式 (VV 或 VH)
+POLARIZATION=VV
+
+# 參考圖像的日期
+REFERENCE=2023-07-19
+
+# 工作目錄
+WORKDIR=raw1
+
+# 數據目錄
+DATADIR=data1
+
+# 設置 SBAS 基線的天數和米數
+BASEDAYS=100
+BASEMETERS=150
+
+# 第一個標記的經緯度 (例如雲林高鐵站)
+marker_lon=120.416389
+marker_lat=23.736389
+
+# 地圖中心的經緯度
+center_lon=120.416389
+center_lat=23.736389
+
+# 第二個標記的經緯度 (例如嘉義高鐵站)
+marker2_lon=120.323124
+marker2_lat=23.459585
+
+# ASF (Alaska Satellite Facility) 登錄憑證
+asf_username=GoogleColab2023
+asf_password=GoogleColab_2023
+
+marker1_name=雲林高鐵站
+marker2_name=嘉義高鐵站
