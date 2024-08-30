@@ -1,5 +1,55 @@
 # SBAS_InSAR_PyGMTSAR
 
+#安裝GMTSAR
+sudo apt install csh subversion autoconf libtiff5-dev libhdf5-dev wget
+
+sudo apt install liblapack-dev
+
+sudo apt install gfortran
+
+sudo apt install g++
+
+sudo apt install libgmt-dev
+
+sudo apt install gmt-dcw gmt-gshhg
+
+sudo apt install gmt
+
+sudo -i
+
+cd /usr/local
+
+git clone --branch 6.1 https://github.com/gmtsar/gmtsar GMTSAR
+
+cd GMTSAR
+
+autoconf
+
+autoupdate
+
+./configure --with-orbits-dir=/usr/local/orbits
+
+make
+
+make install
+
+nano ./.bashrc
+
+加入以下變量至最下方
+
+export GMTSAR=/usr/local/GMTSAR
+
+export GMTSAR_csh=/usr/local/GMTSAR/gmtsar/csh
+
+export PATH=$GMTSAR/bin:"$PATH":$GMTSAR_csh 
+
+按下ctl+x儲存
+
+更新變量
+
+source ~/.bashrc
+
+
 # 創建虛擬機
 
 pip install virtualenv
