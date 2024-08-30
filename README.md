@@ -1,6 +1,7 @@
 # SBAS_InSAR_PyGMTSAR
 
 #安裝GMTSAR
+
 sudo apt install csh subversion autoconf libtiff5-dev libhdf5-dev wget
 
 sudo apt install liblapack-dev
