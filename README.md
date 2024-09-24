@@ -5,14 +5,14 @@
 ##Installation of GMT and GMTSAR with Homebrew
 
 1.Download and install orbit files in /usr/local/orbits:
-   
+'''
    http://topex.ucsd.edu/gmtsar/tar/ORBITS.tar
    sudo -i
    cd /usr/local
    mkdir orbits
    cd orbits
    tar -xvf ~/Downloads/ORBITS.tar # (need full path to ORBITS.tar)
-
+'''
 
 sudo apt install csh subversion autoconf libtiff5-dev libhdf5-dev wget
 
