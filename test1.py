@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import platform, sys, os
-import requests
+
 """### Define ENV Variables for Jupyter Instance"""
 
 # Commented out IPython magic to ensure Python compatibility.
@@ -50,62 +50,46 @@ plt.rcParams['ytick.labelsize'] = 12
 
 from pygmtsar import S1, Stack, tqdm_dask, ASF, Tiles
 
-SCENES_FILE = 'scenes.txt'
-SUBSWATH_FILE = 'subswath.txt'
-AOI_FILE = 'aoi.json'
-CONFIG_FILE = 'config.txt'
+"""## Define Sentinel-1 SLC Scenes and Processing Parameters"""
 
-def load_config(filename):
-    config = {}
-    with open(filename, 'r', encoding='utf-8') as file:
-        for line in file:
-            line = line.strip()
-            if not line or line.startswith('#'):
-                continue
-            name, value = line.strip().split('=',1)
-            config[name.strip()] = value.strip()
-    return config
+SCENES = [
+    'S1A_IW_SLC__1SDV_20230108T100127_20230108T100155_046691_0598BF_3F66',
+    'S1A_IW_SLC__1SDV_20230225T100126_20230225T100154_047391_05B059_D93D',
+    'S1A_IW_SLC__1SDV_20230414T100127_20230414T100155_048091_05C7F9_AD41',
+    'S1A_IW_SLC__1SDV_20230601T100129_20230601T100157_048791_05DE1B_F69C',
+    'S1A_IW_SLC__1SDV_20230719T100132_20230719T100200_049491_05F383_1D33',
+    'S1A_IW_SLC__1SDV_20230905T100135_20230905T100203_050191_060A81_C1ED',
+    'S1A_IW_SLC__1SDV_20231023T100135_20231023T100203_050891_062262_5EDD',
+    'S1A_IW_SLC__1SDV_20231210T100134_20231210T100202_051591_063A8B_F40D',
+    'S1A_IW_SLC__1SDV_20231222T100133_20231222T100201_051766_0640A4_0BB8'
+]
+SUBSWATH = 1
+POLARIZATION = 'VV'
 
-with open(SCENES_FILE, 'r') as file:
-    SCENES = [line.strip() for line in file if line.strip()]
-
-with open(SUBSWATH_FILE, 'r') as file:
-    SUBSWATH = int(file.read().strip())
-
-config = load_config(CONFIG_FILE)
-POLARIZATION = config['POLARIZATION']
-REFERENCE = config['REFERENCE']
-WORKDIR = config['WORKDIR']
-DATADIR = config['DATADIR']
-BASEDAYS = int(config['BASEDAYS'])
-BASEMETERS = int(config['BASEMETERS'])
-marker_lon = float(config['marker_lon'])
-marker_lat = float(config['marker_lat'])
-center_lon = float(config['center_lon'])
-center_lat = float(config['center_lat'])
-marker2_lon = float(config['marker2_lon'])
-marker2_lat = float(config['marker2_lat'])
+REFERENCE    = '2023-07-19'
+WORKDIR      = 'raw1'
+DATADIR      = 'data1'
+BASEDAYS     = 100
+BASEMETERS   = 150
 
 # define DEM filename inside data directory
 DEM = f'{DATADIR}/dem.nc'
 LANDMASK = f'{DATADIR}/landmask.nc'
-def reverse_geocode(lat, lon):
-    """使用 Nominatim API 進行地理編碼來獲取地名"""
-    url = f'https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=10'
-    response = requests.get(url)
-    data = response.json()
-    address = data.get('address', {})
-    return address.get('city', '') or address.get('town', '') or address.get('village', '') or "未知地名"
-
-# 使用 Nominatim API 獲取地名
-marker1_name = config['marker1_name']
-marker2_name = config['marker2_name']
-
 def main():
+    """## Download and Unpack Datasets
+    
+    ## Enter Your ASF User and Password
+    
+    If the data directory is empty or doesn't exist, you'll need to download Sentinel-1 scenes from the Alaska Satellite Facility (ASF) datastore. Use your Earthdata Login credentials. If you don't have an Earthdata Login, you can create one at https://urs.earthdata.nasa.gov//users/new
+    
+    You can also use pre-existing SLC scenes stored on your Google Drive, or you can copy them using a direct public link from iCloud Drive.
+    
+    The credentials below are available at the time the notebook is validated.
+    """
     
     # Set these variables to None and you will be prompted to enter your username and password below.
-    asf_username = config.get('asf_username')
-    asf_password = config.get('asf_password')
+    asf_username = 'GoogleColab2023'
+    asf_password = 'GoogleColab_2023'
     
     # Set these variables to None and you will be prompted to enter your username and password below.
     asf = ASF(asf_username, asf_password)
@@ -115,13 +99,36 @@ def main():
     # scan the data directory for SLC scenes and download missed orbits
     S1.download_orbits(DATADIR, S1.scan_slc(DATADIR))
 
-    with open(AOI_FILE, 'r', encoding='utf-8') as file:
-        geojson_data = json.load(file)
-        AOI = gpd.GeoDataFrame.from_features(geojson_data['features'])
-    
+    geojson = '''
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [120.0018, 23.7512],
+            [120.1356, 23.1695],
+            [120.8809, 23.2923],
+            [120.7739, 23.8874],
+            [120.0018, 23.7512]
+          ]
+        ]
+      }
+    }
+    '''
+    AOI = gpd.GeoDataFrame.from_features([json.loads(geojson)])
+#    BUFFER = 0.025
+#    # geometry is too small for the processing, enlarge it
+#    AOI['geometry'] = AOI.buffer(BUFFER)
+#    AOI = S1.scan_slc(DATADIR) # 使用SUBSWATH的整幅
     # download Copernicus Global DEM 1 arc-second
     Tiles().download_dem(AOI, filename=DEM)
     Tiles().download_landmask(AOI, filename=LANDMASK).plot.imshow(cmap='binary')
+    """## Run Local Dask Cluster
+    
+    Launch Dask cluster for local and distributed multicore computing. That's possible to process terabyte scale Sentinel-1 SLC datasets on Apple Air 16 GB RAM.
+    """
     
     # simple Dask initialization
     if 'client' in globals():
@@ -291,15 +298,17 @@ def main():
     # 顯示速度圖像，使用 'turbo' 色圖，並設定顏色範圍
     velocity_sbas.plot.imshow(cmap='turbo', vmin=-zminmax, vmax=zminmax, ax=ax)
     
+    marker_lon = 120.416389
+    marker_lat = 23.736389
     ax.plot(marker_lon, marker_lat, 'ro', markersize=8)  # 'ro' 為紅色標記
     
     # 設置標題
     ax.set_title('Velocity, mm/year', fontsize=16)
-    plt.suptitle('SBAS LOS Velocity', fontsize=18)
+    plt.suptitle('SBAS LOS Velocity, 2023', fontsize=18)
     # 自動調整佈局
     plt.tight_layout()
     # 保存圖像
-    plt.savefig('SBAS LOS Velocity.jpg')
+    plt.savefig('SBAS LOS Velocity, 2023.jpg')
 
     ## 2D Interactive Map
     # prepare and decimate data
@@ -387,10 +396,10 @@ def main():
         geojson_dict["features"].append(feature)
 
     # write the dictionary to a GeoJSON file
-    with open('GeoJSON_file.geojson', 'w') as f:
+    with open('Yunlin_2023.geojson', 'w') as f:
         json.dump(geojson_dict, f, indent=2)
     # load the GeoJSON from the file
-    with open('GeoJSON_file.geojson', 'r') as f:
+    with open('Yunlin_2023.geojson', 'r') as f:
         geojson = json.load(f)
     print ('Pixels loaded:', len(geojson['features']))
     import folium
@@ -462,7 +471,7 @@ def main():
 
     # Update GeoJSON data
     geojson['features'] = filtered_features
-    with open('GeoJSON_file.geojson', 'w') as f:
+    with open('Yunlin_2023.geojson', 'w') as f:
         json.dump(geojson, f)
 
     # Simplify the geometries using Geopandas, preserving 95% of the shape
@@ -480,7 +489,7 @@ def main():
         feature['properties']['color'] = color
 
     # Save the simplified GeoJSON file
-    with open('GeoJSON_file_simplified.geojson', 'w') as f:
+    with open('Yunlin_2023_simplified.geojson', 'w') as f:
         json.dump(geojson, f)
 
     # Generate the color bar matching the InSAR colormap
@@ -491,26 +500,27 @@ def main():
         colorbar_html += f'<div style="flex: 1; background-color: {color};"></div>'
 
     # Generate the HTML file
-    html_content = f'''
+    html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>InSAR Velocity Map with Azure Maps</title>
-        <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
-        <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css">
+        <title>InSAR Velocity Map with OpenStreetMap</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
         <style>
             body {{ margin: 0; padding: 0; }}
-            #map {{ width: 100%; height: 100vh; }}
+            #map {{ width: 100%; height: 100vh; position: relative; z-index: 1; }}
             #popup {{ background-color: white; border: 1px solid black; padding: 5px; position: absolute; display: none; }}
             #colorbar {{
                 position: absolute;
                 bottom: 20px;
                 left: 20px;
-                width: 300px;  /* Adjust width for a wider colorbar */
+                width: 300px;
                 height: 20px;
                 display: flex;
+                z-index: 1000;  /* 確保 colorbar 顯示在地圖之上 */
             }}
             #colorbar-labels {{
                 position: absolute;
@@ -521,16 +531,7 @@ def main():
                 width: 300px;
                 font-size: 12px;
                 color: black;
-            }}
-            #layerToggle {{
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background-color: white;
-                padding: 10px;
-                border-radius: 5px;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-                font-size: 14px;
+                z-index: 1001;  /* 確保標籤顯示在地圖之上 */
             }}
         </style>
     </head>
@@ -539,6 +540,7 @@ def main():
     <div id="map"></div>
     <div id="popup"></div>
     <div id="colorbar">
+        <!-- 色條將被插入此處 -->
         {colorbar_html}
     </div>
     <div id="colorbar-labels">
@@ -546,98 +548,79 @@ def main():
         <span>0 mm/年</span>
         <span>60 mm/年</span>
     </div>
-    <div id="layerToggle">
-        <label><input type="checkbox" id="insarLayerCheckbox" checked> 顯示 InSAR 圖層</label>
-    </div>
 
     <script>
-        const subscriptionKey = '3IH2ktGvtdzmhTFRQCVsOu7RsRZy1mspoK8XRWRItXLhgUNXeNfhJQQJ99AHACYeBjFAEl8IAAAgAZMPnwPm';  // Replace with your actual Azure Maps API key
+        // 初始化地圖
+        const map = L.map('map').setView([23.736389, 120.416389], 8);
 
-        const map = new atlas.Map('map', {{
-            center: [{center_lon}, {center_lat}],
-            zoom: 8,
-            language: 'zh-Hant',  // Set map language to Traditional Chinese
-            authOptions: {{
-                authType: 'subscriptionKey',
-                subscriptionKey: subscriptionKey
-            }},
-            style: 'road'  // Using default road style
+        // 定義不同的地圖圖層
+        const osmLayer = L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }});
 
-        let insarLayer; // Define a variable to hold the InSAR layer
-
-        map.events.add('ready', function() {{
-            fetch('GeoJSON_file_simplified.geojson')
-                .then(response => response.json())
-                .then(data => {{
-                    const dataSource = new atlas.source.DataSource();
-                    map.sources.add(dataSource);
-                    dataSource.add(data);
-
-                    insarLayer = new atlas.layer.PolygonLayer(dataSource, 'insar-velocity-layer', {{
-                        fillColor: ['get', 'color'],
-                        fillOpacity: 0.5,
-                        strokeColor: 'black',
-                        strokeWidth: 1
-                    }});
-
-                    map.layers.add(insarLayer);
-
-                    map.events.add('mousemove', function(e) {{
-                        const shapes = map.layers.getRenderedShapes(e.position, 'insar-velocity-layer');
-                        if (shapes.length > 0) {{
-                            const properties = shapes[0].getProperties();
-                            const popup = document.getElementById('popup');
-                            popup.style.display = 'block';
-                            popup.style.left = e.position[0] + 'px';
-                            popup.style.top = e.position[1] + 'px';
-                            popup.innerHTML = `速度 (mm/年): ${{properties.velocity}}`;
-                        }} else {{
-                            document.getElementById('popup').style.display = 'none';
-                        }}
-                    }});
-
-                    
-                    const marker1 = new atlas.HtmlMarker({{
-                        position: [{marker_lon}, {marker_lat}],  // Coordinates for Yunlin High-Speed Rail Station
-                        popup: new atlas.Popup({{
-                            content: '<div style="padding:5px;">{marker1_name}</div>'
-                        }}),
-                        icon: 'pin-round-blue'  // Use a supported icon type (e.g., 'pin-round-blue')
-                    }});
-
-                    
-                    const marker2 = new atlas.HtmlMarker({{
-                        position: [{marker2_lon}, {marker2_lat}],  // Coordinates for Chiayi High-Speed Rail Station
-                        popup: new atlas.Popup({{
-                            content: '<div style="padding:5px;">{marker2_name}</div>'
-                        }}),
-                        icon: 'pin-round-blue'  // Use a supported icon type (e.g., 'pin-round-blue')
-                    }});
-
-                    map.markers.add(marker1);
-                    map.markers.add(marker2);
-
-                    // Automatically open the marker popups
-                    marker1.togglePopup();
-                    marker2.togglePopup();
-                }})
-                .catch(error => console.error('Error loading GeoJSON:', error));
+        const satelliteLayer = L.tileLayer('https://{{s}}.google.com/vt/lyrs=s&x={{x}}&y={{y}}&z={{z}}', {{
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '© Google Satellite'
         }});
 
-        // Toggle the InSAR layer visibility
-        document.getElementById('insarLayerCheckbox').addEventListener('change', function(e) {{
-            if (e.target.checked) {{
-                map.layers.add(insarLayer);
-            }} else {{
-                map.layers.remove(insarLayer);
-            }}
-        }});
+        // 預設使用 OSM 圖層
+        osmLayer.addTo(map);
+
+        // 載入 GeoJSON 資料
+        fetch('Yunlin_2023_simplified.geojson')
+            .then(response => response.json())
+            .then(data => {{
+                // 定義 InSAR 速度圖層樣式
+                function style(feature) {{
+                    return {{
+                        fillColor: feature.properties.color,
+                        weight: 0.5,  // 去掉黑色邊框
+                        opacity: 1,
+                        color: 'none',  // 不需要邊界顏色
+                        fillOpacity: 0.7
+                    }};
+                }}
+
+                // 將 InSAR 速度圖層加入地圖
+                const insarLayer = L.geoJson(data, {{ style: style }}).addTo(map);
+
+                // 在懸停時顯示 popup
+                insarLayer.on('mouseover', function(e) {{
+                    const properties = e.layer.feature.properties;
+                    const roundedVelocity = properties.velocity.toFixed(2);  // 將速度縮減至小數點後兩位
+                    const popup = L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent('速度 (mm/年): ' + roundedVelocity)
+                        .openOn(map);
+                }});
+
+                // 定義圖層控制器
+                const baseMaps = {{
+                    "OpenStreetMap": osmLayer,
+                    "衛星地圖": satelliteLayer
+                }};
+
+                const overlayMaps = {{
+                    "InSAR 速度圖層": insarLayer
+                }};
+
+                // 加入圖層控制器
+                L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+                // 添加地標標記
+                const marker1 = L.marker([23.736389, 120.416389]).addTo(map)
+                    .bindPopup('雲林高鐵站').openPopup();
+
+                const marker2 = L.marker([23.459585, 120.323124]).addTo(map)
+                    .bindPopup('嘉義高鐵站').openPopup();
+            }})
+            .catch(error => console.error('Error loading GeoJSON:', error));
     </script>
 
     </body>
     </html>
-    '''
+    """
 
     # Write the HTML content to a file
     with open('index.html', 'w') as f:
