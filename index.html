@@ -86,9 +86,10 @@
             // 在懸停時顯示 popup
             insarLayer.on('mouseover', function(e) {
                 const properties = e.layer.feature.properties;
+                const roundedVelocity = properties.velocity.toFixed(2);  // 將速度縮減至小數點後兩位
                 const popup = L.popup()
                     .setLatLng(e.latlng)
-                    .setContent('速度 (mm/年): ' + properties.velocity)
+                    .setContent('速度 (mm/年): ' + roundedVelocity)
                     .openOn(map);
             });
 
