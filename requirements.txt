@@ -151,7 +151,7 @@ snuggs==1.4.7
 sortedcontainers==2.4.0
 soupsieve==2.5
 stack-data==0.6.3
-statsmodels==0.14.2
+statsmodels==0.14.6
 tblib==3.0.0
 tenacity==8.2.2
 terminado==0.18.1
