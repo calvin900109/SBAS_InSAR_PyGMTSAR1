@@ -157,7 +157,7 @@ tenacity==8.2.2
 terminado==0.18.1
 threadpoolctl==3.5.0
 tifffile==2024.8.10
-tinycss2==1.3.0
+tinycss2==1.5.1
 tomli==2.0.1
 toolz==0.12.1
 topojson==1.9
