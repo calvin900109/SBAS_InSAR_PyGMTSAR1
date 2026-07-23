@@ -44,7 +44,7 @@ geopandas==1.0.1
 h11==0.14.0
 h5netcdf==1.3.0
 h5py==3.11.0
-httpcore==1.0.5
+httpcore==1.0.9
 httpx==0.27.0
 idna==3.7
 imageio==2.34.2
