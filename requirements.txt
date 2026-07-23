@@ -15,7 +15,7 @@ bleach==6.4.0
 bokeh==3.4.3
 branca==0.7.2
 certifi==2024.7.4
-cffi==1.17.0
+cffi==2.1.0
 cftime==1.6.4
 charset-normalizer==3.3.2
 click==8.1.7
