@@ -107,7 +107,7 @@ patsy==0.5.6
 pexpect==4.9.0
 pillow==10.4.0
 PIMS==0.7
-platformdirs==4.2.2
+platformdirs==4.11.0
 pooch==1.8.2
 prometheus_client==0.20.0
 prompt_toolkit==3.0.47
