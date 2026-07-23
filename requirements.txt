@@ -14,7 +14,7 @@ beautifulsoup4==4.12.3
 bleach==6.1.0
 bokeh==3.4.3
 branca==0.7.2
-certifi==2024.7.4
+certifi==2026.7.22
 cffi==1.17.0
 cftime==1.6.4
 charset-normalizer==3.3.2
