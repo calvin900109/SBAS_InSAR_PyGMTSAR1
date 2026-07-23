@@ -115,7 +115,7 @@ psutil==6.0.0
 ptyprocess==0.7.0
 pure_eval==0.2.3
 pyarrow==17.0.0
-pyarrow-hotfix==0.6
+pyarrow-hotfix==0.7
 pycparser==2.22
 Pygments==2.18.0
 pygmtsar==2024.8.2.post3
