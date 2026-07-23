@@ -84,7 +84,7 @@ matplotlib==3.9.1.post1
 matplotlib-inline==0.1.7
 mdit-py-plugins==0.4.1
 mdurl==0.1.2
-mistune==3.0.2
+mistune==3.3.4
 msgpack==1.0.8
 nbclient==0.10.0
 nbconvert==7.16.4
