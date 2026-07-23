@@ -9,7 +9,7 @@ asf_search==12.2.3
 asttokens==2.4.1
 async-lru==2.0.4
 attrs==24.2.0
-babel==2.16.0
+babel==2.18.0
 beautifulsoup4==4.12.3
 bleach==6.1.0
 bokeh==3.4.3
