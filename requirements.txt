@@ -109,7 +109,7 @@ pillow==10.4.0
 PIMS==0.7
 platformdirs==4.2.2
 pooch==1.8.2
-prometheus_client==0.20.0
+prometheus_client==0.25.0
 prompt_toolkit==3.0.47
 psutil==6.0.0
 ptyprocess==0.7.0
