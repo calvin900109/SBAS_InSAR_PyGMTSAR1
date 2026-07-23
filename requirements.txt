@@ -22,7 +22,7 @@ click==8.1.7
 click-plugins==1.1.1
 cligj==0.7.2
 cloudpickle==3.0.0
-comm==0.2.2
+comm==0.2.3
 contourpy==1.2.1
 cycler==0.12.1
 dask==2024.8.0
