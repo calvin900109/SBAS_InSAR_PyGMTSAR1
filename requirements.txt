@@ -101,7 +101,7 @@ pandas==2.2.2
 pandocfilters==1.5.1
 panel==1.4.5
 param==2.1.1
-parso==0.8.4
+parso==0.8.7
 partd==1.4.2
 patsy==0.5.6
 pexpect==4.9.0
