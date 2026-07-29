@@ -39,7 +39,7 @@ fastjsonschema==2.22.1
 folium==0.20.0
 fonttools==4.63.0
 fqdn==1.5.1
-fsspec==2026.6.0
+fsspec==2026.7.0
 geopandas==1.1.4
 h11==0.16.0
 h5netcdf==1.8.1
