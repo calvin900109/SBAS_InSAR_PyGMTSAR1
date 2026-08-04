@@ -51,7 +51,7 @@ imageio==2.37.4
 importlib_metadata==9.0.0
 ipykernel==7.3.0
 ipyleaflet==0.20.0
-ipython==9.15.0
+ipython==9.16.0
 ipywidgets==8.1.8
 isoduration==20.11.0
 jedi==0.20.0
@@ -156,14 +156,14 @@ tblib==3.2.2
 tenacity==9.1.4
 terminado==0.18.1
 threadpoolctl==3.6.0
-tifffile==2026.7.14
+tifffile==2026.7.31
 tinycss2==1.5.1
 tomli==2.4.1
 toolz==1.1.0
 topojson==1.10
 tornado==6.5.7
 tqdm==4.70.0
-traitlets==5.15.1
+traitlets==5.16.0
 traittypes==0.2.3
 types-python-dateutil==2.9.0.20260716
 typing_extensions==4.16.0
