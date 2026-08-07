@@ -15,7 +15,7 @@ bleach==6.4.0
 bokeh==3.9.2
 branca==0.8.2
 certifi==2026.7.22
-cffi==2.1.0
+cffi==2.1.1
 cftime==1.6.5
 charset-normalizer==3.4.9
 click==8.4.2
@@ -51,7 +51,7 @@ imageio==2.37.4
 importlib_metadata==9.0.0
 ipykernel==7.3.0
 ipyleaflet==0.20.0
-ipython==9.16.0
+ipython==9.16.1
 ipywidgets==8.1.8
 isoduration==20.11.0
 jedi==0.20.0
@@ -163,7 +163,7 @@ toolz==1.1.0
 topojson==1.10
 tornado==6.5.7
 tqdm==4.70.0
-traitlets==5.16.0
+traitlets==5.16.1
 traittypes==0.2.3
 types-python-dateutil==2.9.0.20260716
 typing_extensions==4.16.0
