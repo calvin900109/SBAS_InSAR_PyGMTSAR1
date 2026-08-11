@@ -5,7 +5,7 @@ appnope==0.1.4
 argon2-cffi==25.1.0
 argon2-cffi-bindings==25.1.0
 arrow==1.4.0
-asf_search==12.2.3
+asf_search==12.3.0
 asttokens==3.0.2
 async-lru==2.3.0
 attrs==26.1.0
@@ -107,7 +107,7 @@ patsy==1.0.2
 pexpect==4.9.0
 pillow==12.3.0
 PIMS==0.7
-platformdirs==4.11.0
+platformdirs==4.11.1
 pooch==1.9.0
 prometheus_client==0.26.0
 prompt_toolkit==3.0.53
@@ -129,7 +129,7 @@ pyvista==0.48.4
 pyviz_comms==3.0.6
 PyYAML==6.0.3
 pyzmq==27.1.0
-rasterio==1.5.0
+rasterio==1.5.1
 referencing==0.37.0
 regex==2026.7.19
 remotezip==0.12.3
