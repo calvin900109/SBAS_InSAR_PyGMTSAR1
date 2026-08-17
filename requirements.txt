@@ -5,7 +5,7 @@ appnope==0.1.4
 argon2-cffi==25.1.0
 argon2-cffi-bindings==25.1.0
 arrow==1.4.0
-asf_search==12.3.0
+asf_search==12.3.1
 asttokens==3.0.2
 async-lru==2.3.0
 attrs==26.1.0
@@ -17,7 +17,7 @@ branca==0.8.2
 certifi==2026.7.22
 cffi==2.1.1
 cftime==1.6.5
-charset-normalizer==3.4.9
+charset-normalizer==3.5.0
 click==8.4.2
 click-plugins==1.1.1.2
 cligj==0.7.2
@@ -74,7 +74,7 @@ jupyterlab_server==2.28.0
 jupyterlab_widgets==3.0.16
 kiwisolver==1.5.0
 linkify-it-py==2.1.0
-llvmlite==0.48.0
+llvmlite==0.49.0
 locket==1.0.0
 lz4==4.4.5
 Markdown==3.10.3
@@ -91,9 +91,9 @@ nbconvert==7.17.1
 nbformat==5.11.0
 nc-time-axis==1.4.1
 nest-asyncio==1.6.0
-notebook==7.6.1
+notebook==7.6.2
 notebook_shim==0.2.4
-numba==0.66.0
+numba==0.67.0
 numpy==2.5.2
 overrides==7.7.0
 packaging==26.3
@@ -107,7 +107,7 @@ patsy==1.0.2
 pexpect==4.9.0
 pillow==12.3.0
 PIMS==0.7
-platformdirs==4.11.2
+platformdirs==4.11.3
 pooch==1.9.0
 prometheus_client==0.26.0
 prompt_toolkit==3.0.53
