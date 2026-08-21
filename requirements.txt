@@ -46,7 +46,7 @@ h5netcdf==1.8.1
 h5py==3.16.0
 httpcore==1.0.9
 httpx==0.28.1
-idna==3.18
+idna==3.19
 imageio==2.37.4
 importlib_metadata==9.0.0
 ipykernel==7.3.0
@@ -88,7 +88,7 @@ mistune==3.3.4
 msgpack==1.2.1
 nbclient==0.11.0
 nbconvert==7.17.1
-nbformat==5.11.0
+nbformat==5.11.1
 nc-time-axis==1.4.1
 nest-asyncio==1.6.0
 notebook==7.6.2
@@ -99,7 +99,7 @@ overrides==7.7.0
 packaging==26.3
 pandas==3.0.5
 pandocfilters==1.5.1
-panel==1.9.3
+panel==1.9.4
 param==2.4.1
 parso==0.8.7
 partd==1.4.2
@@ -117,7 +117,7 @@ pure_eval==0.2.3
 pyarrow==25.0.1
 pyarrow-hotfix==0.7
 pycparser==3.0
-Pygments==2.20.0
+Pygments==2.21.0
 pygmtsar==2025.4.8.post1
 pyogrio==0.13.0
 pyparsing==3.3.2
