@@ -180,6 +180,6 @@ websocket-client==1.9.2
 widgetsnbextension==4.0.16
 xarray==2026.7.0
 xmltodict==1.0.4
-xyzservices==2026.3.0
+xyzservices==2026.9.1
 zict==3.0.0
 zipp==4.1.0
