@@ -1,6 +1,6 @@
 adjustText==1.4.0
 affine==3.0.1
-anyio==4.15.0
+anyio==4.15.1
 appnope==1.0.0
 argon2-cffi==25.1.0
 argon2-cffi-bindings==26.1.0
@@ -121,7 +121,7 @@ Pygments==2.21.0
 pygmtsar==2025.4.8.post1
 pyogrio==0.13.0
 pyparsing==3.3.2
-pyproj==3.7.2
+pyproj==3.8.0
 python-dateutil==2.9.0.post0
 python-json-logger==4.2.0
 pytz==2026.3.post1
