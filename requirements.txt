@@ -125,7 +125,7 @@ pyproj==3.8.0
 python-dateutil==2.9.0.post0
 python-json-logger==4.2.0
 pytz==2026.3.post1
-pyvista==0.48.4
+pyvista==0.49.0
 pyviz_comms==3.0.6
 PyYAML==6.0.3
 pyzmq==27.2.0
