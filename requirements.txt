@@ -120,7 +120,7 @@ pycparser==3.0
 Pygments==2.21.0
 pygmtsar==2025.4.8.post1
 pyogrio==0.13.0
-pyparsing==3.3.2
+pyparsing==3.3.3
 pyproj==3.8.0
 python-dateutil==2.9.0.post0
 python-json-logger==4.2.0
@@ -156,7 +156,7 @@ tblib==3.2.2
 tenacity==9.1.4
 terminado==0.18.1
 threadpoolctl==3.7.0
-tifffile==2026.9.15
+tifffile==2026.9.20
 tinycss2==1.5.1
 tomli==2.4.1
 toolz==1.1.0
