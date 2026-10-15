@@ -125,7 +125,7 @@ pyproj==3.8.0
 python-dateutil==2.9.0.post0
 python-json-logger==4.2.0
 pytz==2026.5
-pyvista==0.49.0
+pyvista==0.49.1
 pyviz_comms==3.0.6
 PyYAML==6.0.3
 pyzmq==27.2.0
@@ -149,7 +149,7 @@ slicerator==1.1.0
 sniffio==1.3.1
 snuggs==1.4.7
 sortedcontainers==2.4.0
-soupsieve==2.10
+soupsieve==3.0.2
 stack-data==0.6.3
 statsmodels==0.15.0
 tblib==3.2.2
