@@ -14,7 +14,7 @@ beautifulsoup4==4.15.0
 bleach==6.4.0
 bokeh==3.10.1
 branca==0.8.2
-certifi==2026.10.19
+certifi==2026.10.23
 cffi==2.1.1
 cftime==1.6.6.1
 charset-normalizer==3.5.2
@@ -48,7 +48,7 @@ httpcore==1.0.9
 httpx==0.28.1
 idna==3.20
 imageio==2.38.1
-importlib_metadata==9.1.0
+importlib_metadata==10.1.0
 ipykernel==7.4.0
 ipyleaflet==0.20.0
 ipython==9.17.1
@@ -99,7 +99,7 @@ overrides==7.7.0
 packaging==26.3
 pandas==3.1.0
 pandocfilters==1.5.1
-panel==1.9.4
+panel==1.10.0
 param==2.4.2
 parso==0.8.7
 partd==1.4.2
