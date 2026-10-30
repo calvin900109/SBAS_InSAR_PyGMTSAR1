@@ -42,7 +42,7 @@ fqdn==1.6.0
 fsspec==2026.9.0
 geopandas==1.2.0
 h11==0.16.0
-h5netcdf==1.8.1
+h5netcdf==1.8.2
 h5py==3.16.0
 httpcore==1.0.9
 httpx==0.28.1
@@ -58,7 +58,7 @@ jedi==0.20.1
 Jinja2==3.1.6
 joblib==1.6.0
 json5==0.17.3
-jsonpointer==3.5
+jsonpointer==3.6
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 jupyter-events==0.12.1
@@ -85,7 +85,7 @@ matplotlib-inline==0.2.2
 mdit-py-plugins==0.6.1
 mdurl==0.1.2
 mistune==3.4.0
-msgpack==1.2.3
+msgpack==1.2.4
 nbclient==0.11.0
 nbconvert==7.17.2
 nbformat==5.11.1
@@ -140,7 +140,7 @@ rioxarray==0.23.0
 rpds-py==2026.9.1
 scikit-learn==1.9.1
 scipy==1.18.1
-scooby==0.12.0
+scooby==0.12.1
 seaborn==0.13.2
 Send2Trash==2.1.0
 shapely==2.2.0
