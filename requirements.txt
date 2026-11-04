@@ -107,7 +107,7 @@ patsy==1.0.3
 pexpect==4.9.0
 pillow==13.0.0
 PIMS==0.7
-platformdirs==4.14.0
+platformdirs==4.14.2
 pooch==1.9.0
 prometheus_client==0.26.0
 prompt_toolkit==3.0.53
@@ -122,7 +122,7 @@ pygmtsar==2025.4.8.post1
 pyogrio==0.13.0
 pyparsing==3.3.3
 pyproj==3.8.0
-python-dateutil==3.0.0
+python-dateutil==4.0.0
 python-json-logger==4.2.0
 pytz==2026.6
 pyvista==0.49.2
