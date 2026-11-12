@@ -131,7 +131,7 @@ PyYAML==6.0.3
 pyzmq==27.3.0
 rasterio==1.5.2
 referencing==0.37.0
-regex==2026.11.7
+regex==2026.11.9
 remotezip==0.12.6
 requests==2.34.2
 rfc3339-validator==0.1.4
@@ -156,7 +156,7 @@ tblib==3.2.2
 tenacity==9.2.1
 terminado==0.18.1
 threadpoolctl==3.8.0
-tifffile==2026.10.15
+tifffile==2026.11.8
 tinycss2==1.5.1
 tomli==2.5.0
 toolz==1.2.0
