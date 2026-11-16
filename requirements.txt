@@ -3,7 +3,7 @@ affine==3.0.1
 anyio==4.16.0
 appnope==1.0.0
 argon2-cffi==25.1.0
-argon2-cffi-bindings==26.1.0
+argon2-cffi-bindings==26.2.0
 arrow==1.4.0
 asf_search==14.1.0
 asttokens==3.0.2
@@ -42,7 +42,7 @@ fqdn==1.6.0
 fsspec==2026.9.0
 geopandas==1.2.0
 h11==0.16.0
-h5netcdf==1.8.2
+h5netcdf==1.8.3
 h5py==3.16.0
 httpcore==1.0.9
 httpx==0.28.1
@@ -58,7 +58,7 @@ jedi==0.20.1
 Jinja2==3.1.6
 joblib==1.6.0
 json5==0.17.3
-jsonpointer==3.10
+jsonpointer==3.12
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 jupyter-events==0.12.1
@@ -78,11 +78,11 @@ llvmlite==0.50.0
 locket==1.0.0
 lz4==4.4.5
 Markdown==3.11.3
-markdown-it-py==4.2.0
+markdown-it-py==4.3.0
 MarkupSafe==3.0.4
 matplotlib==3.11.2
 matplotlib-inline==0.2.2
-mdit-py-plugins==0.6.1
+mdit-py-plugins==0.7.0
 mdurl==0.1.2
 mistune==3.4.0
 msgpack==1.2.4
@@ -142,7 +142,7 @@ scikit-learn==1.9.1
 scipy==1.18.1
 scooby==0.12.1
 seaborn==0.13.2
-Send2Trash==2.1.0
+Send2Trash==2.2.0
 shapely==2.2.0
 six==1.17.0
 slicerator==1.1.0
@@ -156,7 +156,7 @@ tblib==3.2.2
 tenacity==9.2.1
 terminado==0.18.1
 threadpoolctl==3.8.0
-tifffile==2026.11.8
+tifffile==2026.11.12
 tinycss2==1.5.1
 tomli==2.5.0
 toolz==1.2.0
