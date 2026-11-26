@@ -17,7 +17,7 @@ branca==0.8.2
 certifi==2026.11.20
 cffi==2.1.1
 cftime==1.6.6.1
-charset-normalizer==3.5.2
+charset-normalizer==3.5.3
 click==8.5.1
 click-plugins==1.1.1.2
 cligj==0.7.2
@@ -165,7 +165,7 @@ tornado==6.6.1
 tqdm==4.70.1
 traitlets==5.16.1
 traittypes==0.2.3
-types-python-dateutil==2.9.0.20261116
+types-python-dateutil==2.9.0.20261122
 typing_extensions==4.16.0
 tzdata==2026.6
 tzlocal==5.4.5
